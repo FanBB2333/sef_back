@@ -19,12 +19,21 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/searchName', function() {
-    // $con = new CourseController;
+Route::get('/searchname', function() {
     $ret = (new App\Http\Controllers\CourseController)->search_by_name($_GET['name']);
     return $ret;
 });
 
+Route::get('/searchid', function() {
+    $ret = (new App\Http\Controllers\CourseController)->search_by_id($_GET['id']);
+    return $ret;
+});
+
+
+Route::get('/searchteacher', function() {
+    $ret = (new App\Http\Controllers\CourseController)->search_by_teacher($_GET['t']);
+    return $ret;
+});
 
 
 Route::post('/changetime', 'TimeManagementController@update()');
