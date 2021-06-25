@@ -36,9 +36,15 @@ Route::get('/searchteacher', function() {
 });
 
 
+
 Route::post('/changetime', 'TimeManagementController@update()');
 
 Route::get('/searchcourseById/{id}',function ($id){
     $ret = (new App\Http\Controllers\ViewResult)->viewResult($id);
+    return $ret;
+});
+
+Route::get('/searchStuById/{id}',function($id){
+    $ret = (new App\Http\Controllers\ViewStudent)->viewStudent($id);
     return $ret;
 });
