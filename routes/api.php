@@ -38,7 +38,7 @@ Route::get('/searchteacher', function() {
 
 Route::post('/changetime', 'TimeManagementController@update()');
 
-Route::get('/result/{id}',function ($id){
+Route::get('/searchcourseById/{id}',function ($id){
     $ret = (new App\Http\Controllers\ViewResult)->viewResult($id);
     return $ret;
 });
