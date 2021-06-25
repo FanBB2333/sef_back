@@ -46,4 +46,19 @@ class CourseController extends Controller
 
         return $bool;
     }
+
+    public function managerChooseCourse($stu_id, $cid){
+        $query = "select * from course_select where Student_id='";
+        $query.=$stu_id;
+        $query.="' and Course_id=";
+        $query.=$cid;
+        $q = DB::select($query);
+        // var_dump(count($q));
+
+        $bool=DB::update('update course_select set IsSelected=1 where Student_id=? and Course_id=? ',[$stu_id, $cid]);
+        if(count($q) == 0){
+            $t=DB::insert("insert into course_select values(?,?,?)",[$stu_id,$cid,1]);
+        }
+        return 1;
+    }
 }

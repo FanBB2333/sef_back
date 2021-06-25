@@ -52,3 +52,9 @@ Route::get('/chooseCourse', function() {
     $ret = (new App\Http\Controllers\CourseController)->chooseCourse($_GET['stu'], $_GET['cid']);
     return $ret;
 });
+
+
+Route::get('/managerChooseCourse', function() {
+    $ret = (new App\Http\Controllers\CourseController)->managerChooseCourse($_GET['stu'], $_GET['cid']);
+    return $ret;
+});
