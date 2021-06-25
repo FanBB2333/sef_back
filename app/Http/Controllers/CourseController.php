@@ -33,4 +33,11 @@ class CourseController extends Controller
         $classes = DB::select($query);
         return $classes;
     }
+
+    public function getAll(){
+        $query = "select course.ID as ID, course.name as cname,credit, type, teacher.name as tname, day, time from course,teacher where course.teacher_ID=teacher.ID";
+        $classes = DB::select($query);
+        return $classes;
+
+    }
 }

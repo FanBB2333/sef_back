@@ -42,3 +42,8 @@ Route::get('/searchcourseById/{id}',function ($id){
     $ret = (new App\Http\Controllers\ViewResult)->viewResult($id);
     return $ret;
 });
+
+Route::get('/getAllCourse',function(){
+    $ret = (new App\Http\Controllers\CourseController)->getAll();
+    return $ret;
+});
