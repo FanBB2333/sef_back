@@ -47,3 +47,8 @@ Route::get('/getAllCourse',function(){
     $ret = (new App\Http\Controllers\CourseController)->getAll();
     return $ret;
 });
+
+Route::get('/chooseCourse', function() {
+    $ret = (new App\Http\Controllers\CourseController)->chooseCourse($_GET['stu'], $_GET['cid']);
+    return $ret;
+});

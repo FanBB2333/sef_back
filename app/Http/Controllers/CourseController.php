@@ -40,4 +40,10 @@ class CourseController extends Controller
         return $classes;
 
     }
+
+    public function chooseCourse($stu_id, $cid){
+        $bool=DB::insert("insert into course_select values(?,?,?)",[$stu_id,$cid,0]);
+
+        return $bool;
+    }
 }
