@@ -42,9 +42,50 @@ class CourseController extends Controller
     }
 
     public function chooseCourse($stu_id, $cid){
-        $bool=DB::insert("insert into course_select values(?,?,?)",[$stu_id,$cid,0]);
-
+        $query = "select * from course_select where Student_id='";
+        $query.=$stu_id;
+        $query.="' and Course_id=";
+        $query.=$cid;
+        $q = DB::select($query);
+        if(count($q) == 0){
+        $bool=DB::insert("insert into course_select(Student_id, Course_id, IsSelected) values(?,?,?)",[$stu_id,$cid,0]);
         return $bool;
+        }
+        return $q;
+
+    }
+
+    public function choosePlan($stu_id, $cid){
+        $query = "select * from training_program where Student_id='";
+        $query.=$stu_id;
+        $query.="' and Course_id=";
+        $query.=$cid;
+        $q = DB::select($query);
+        if(count($q) == 0){
+            $bool=DB::insert("insert into training_program(Student_id, Course_id) values(?,?)",[$stu_id,$cid]);
+            return $bool;
+        }
+        return $q;
+    }
+
+    public function getPlanByID($stu_id){
+        $query = "select course.ID as ID, course.name as cname,credit, type, teacher.name as tname, day, time 
+        from course,teacher,training_program 
+        where course.teacher_ID=teacher.ID and training_program.Course_id=course.ID and training_program.Student_id='";
+        $query.=$stu_id;
+        $query.="'";
+        $classes = DB::select($query);
+        return $classes;
+    }
+
+    public function delCourse($stu_id, $cid){
+        $num=DB::delete('delete from course_select where Student_id= ? and Course_id=?',[$stu_id,$cid]);
+        return $num;
+    }
+
+    public function delCourseinPlan($stu_id, $cid){
+        $num=DB::delete('delete from training_program where Student_id= ? and Course_id=?',[$stu_id,$cid]);
+        return $num;
     }
 
     public function managerChooseCourse($stu_id, $cid){

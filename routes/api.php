@@ -56,6 +56,25 @@ Route::get('/chooseCourse', function() {
     return $ret;
 });
 
+Route::get('/choosePlan', function() {
+    $ret = (new App\Http\Controllers\CourseController)->choosePlan($_GET['stu'], $_GET['cid']);
+    return $ret;
+});
+
+Route::get('/getPlanByID', function() {
+    $ret = (new App\Http\Controllers\CourseController)->getPlanByID($_GET['id']);
+    return $ret;
+});
+
+Route::get('/delCourseinPlan', function() {
+    $ret = (new App\Http\Controllers\CourseController)->delCourseinPlan($_GET['stu'], $_GET['cid']);
+    return $ret;
+});
+
+Route::get('/delCourse', function() {
+    $ret = (new App\Http\Controllers\CourseController)->delCourse($_GET['stu'], $_GET['cid']);
+    return $ret;
+});
 
 Route::get('/managerChooseCourse', function() {
     $ret = (new App\Http\Controllers\CourseController)->managerChooseCourse($_GET['stu'], $_GET['cid']);
