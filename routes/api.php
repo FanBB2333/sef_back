@@ -2,8 +2,6 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use app\Http\Controllers\ViewResult;
-use app\Http\Controllers\CourseController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -46,5 +44,20 @@ Route::get('/searchcourseById/{id}',function ($id){
 
 Route::get('/searchStuById/{id}',function($id){
     $ret = (new App\Http\Controllers\ViewStudent)->viewStudent($id);
+    return $ret;
+});
+Route::get('/getAllCourse',function(){
+    $ret = (new App\Http\Controllers\CourseController)->getAll();
+    return $ret;
+});
+
+Route::get('/chooseCourse', function() {
+    $ret = (new App\Http\Controllers\CourseController)->chooseCourse($_GET['stu'], $_GET['cid']);
+    return $ret;
+});
+
+
+Route::get('/managerChooseCourse', function() {
+    $ret = (new App\Http\Controllers\CourseController)->managerChooseCourse($_GET['stu'], $_GET['cid']);
     return $ret;
 });
