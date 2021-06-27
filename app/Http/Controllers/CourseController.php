@@ -139,7 +139,8 @@ class CourseController extends Controller
         if(count($q) == 0){
             $remainder=DB::update('update course set selected=selected+1 where ID=? ',[$cid]);
             $t=DB::insert("insert into course_select(Student_id, Course_id,IsSelected) values(?,?,?)",[$stu_id,$cid,1]);
+            return 1;
         }
-        return 1;
+        return 0;
     }
 }
