@@ -71,9 +71,19 @@ class CourseController extends Controller
                 return "Time_Conflict";
             }
         } 
-        // var_dump($all_selected_courses);
+        $course_to_sel=DB::table("course")->where('ID','=',$cid)->get();
+        if($course_to_sel[0]->selected >= $course_to_sel[0]->total){
+            return "No_remain"; // If the course is full
+        }
+
         if(count($q) == 0){
+
             $bool=DB::insert("insert into course_select(Student_id, Course_id, IsSelected) values(?,?,?)",[$stu_id,$cid,0]);
+            if($bool){
+                $remainder=DB::update('update course set selected=selected+1 where ID=? ',[$cid]);
+                return "Success";
+
+            }
             return $bool;
         }
         return $q;
@@ -94,7 +104,7 @@ class CourseController extends Controller
     }
 
     public function getPlanByID($stu_id){
-        $query = "select course.ID as ID, course.name as cname,credit, type, teacher.name as tname, day, time 
+        $query = "select course.ID as ID, course.name as cname,credit, type, teacher.name as tname, day, time, total, selected
         from course,teacher,training_program 
         where course.teacher_ID=teacher.ID and training_program.Course_id=course.ID and training_program.Student_id='";
         $query.=$stu_id;
@@ -105,6 +115,10 @@ class CourseController extends Controller
 
     public function delCourse($stu_id, $cid){
         $num=DB::delete('delete from course_select where Student_id= ? and Course_id=?',[$stu_id,$cid]);
+        if($num == 1){
+            $remainder=DB::update('update course set selected=selected-1 where ID=? ',[$cid]);
+        }
+
         return $num;
     }
 
