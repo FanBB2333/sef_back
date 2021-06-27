@@ -72,7 +72,7 @@ class CourseController extends Controller
             }
         } 
         $course_to_sel=DB::table("course")->where('ID','=',$cid)->get();
-        if($course_to_sel[0]->selected >= $course_to_sel[0]->total){
+        if($course_to_sel[0]->selected >= $course_to_sel[0]->stock){
             return "No_remain"; // If the course is full
         }
 
@@ -104,7 +104,7 @@ class CourseController extends Controller
     }
 
     public function getPlanByID($stu_id){
-        $query = "select course.ID as ID, course.name as cname,credit, type, teacher.name as tname, day, time, total, selected
+        $query = "select course.ID as ID, course.name as cname,credit, type, teacher.name as tname, day, time, stock, selected
         from course,teacher,training_program 
         where course.teacher_ID=teacher.ID and training_program.Course_id=course.ID and training_program.Student_id='";
         $query.=$stu_id;
