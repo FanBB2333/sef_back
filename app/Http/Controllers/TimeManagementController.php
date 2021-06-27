@@ -17,4 +17,11 @@ class TimeManagementController extends Controller
 //        $bool=DB::update('update TimeManagement set primary_start= ? , primary_end= ? , re_start = ? , re_end = ? , max_user = ? where ID=1 ',[$primary[0],$primary[1], $Re[0], $Re[1], $cnt]);
         return $primary;
     }
+
+    public function set_state($state){
+        $ret=DB::update('update timemanagement set state=? where ID=1 ',[$state]);
+        return $ret;
+    }
+
+    
 }

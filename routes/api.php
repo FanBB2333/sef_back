@@ -86,3 +86,8 @@ Route::get('/managerChooseCourse', function() {
     $ret = (new App\Http\Controllers\CourseController)->managerChooseCourse($_GET['stu'], $_GET['cid']);
     return $ret;
 });
+
+Route::get('/managerState', function() {
+    $ret = (new App\Http\Controllers\TimeManagementController)->set_state($_GET['state']);
+    return $ret;
+});
