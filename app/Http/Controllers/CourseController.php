@@ -38,7 +38,12 @@ class CourseController extends Controller
         $query = "select course.ID as ID, course.name as cname,credit, type, teacher.name as tname, day, time from course,teacher where course.teacher_ID=teacher.ID";
         $classes = DB::select($query);
         return $classes;
-
+    }
+    
+    public function getDistinct(){
+        $query = "select distinct course.ID as ID, course.name as cname,credit, type, teacher.name as tname, day, time from course,teacher where course.teacher_ID=teacher.ID";
+        $classes = DB::select($query);
+        return $classes;
     }
 
     public function chooseCourse($stu_id, $cid){
@@ -47,9 +52,29 @@ class CourseController extends Controller
         $query.="' and Course_id=";
         $query.=$cid;
         $q = DB::select($query);
+
+        $course_to_test=DB::table("course")->where('ID','=',$cid)->get();
+        if(count($course_to_test) == 0){
+            return ;
+        }
+
+        $time = $course_to_test[0]->time;
+        $day = $course_to_test[0]->day;
+        $test_query = "select * from course_select,course where course_select.Course_id = course.ID and Student_id='";
+        $test_query.=$stu_id;
+        $test_query.="'";
+        $all_selected_courses=DB::select($test_query);
+        
+        for ($i=0; $i<count($all_selected_courses); $i++) {
+            $tmp = $all_selected_courses[$i];
+            if($tmp->time == $time && $tmp->day == $day){
+                return "Time_Conflict";
+            }
+        } 
+        // var_dump($all_selected_courses);
         if(count($q) == 0){
-        $bool=DB::insert("insert into course_select(Student_id, Course_id, IsSelected) values(?,?,?)",[$stu_id,$cid,0]);
-        return $bool;
+            $bool=DB::insert("insert into course_select(Student_id, Course_id, IsSelected) values(?,?,?)",[$stu_id,$cid,0]);
+            return $bool;
         }
         return $q;
 

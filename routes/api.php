@@ -46,8 +46,14 @@ Route::get('/searchStuById/{id}',function($id){
     $ret = (new App\Http\Controllers\ViewStudent)->viewStudent($id);
     return $ret;
 });
+
 Route::get('/getAllCourse',function(){
     $ret = (new App\Http\Controllers\CourseController)->getAll();
+    return $ret;
+});
+
+Route::get('/getDistinctCourse',function(){
+    $ret = (new App\Http\Controllers\CourseController)->getDistinct();
     return $ret;
 });
 
