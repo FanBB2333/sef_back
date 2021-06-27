@@ -91,3 +91,8 @@ Route::get('/managerState', function() {
     $ret = (new App\Http\Controllers\TimeManagementController)->set_state($_GET['state']);
     return $ret;
 });
+
+Route::get('/getManageState', function() {
+    $ret = (new App\Http\Controllers\TimeManagementController)->get_state();
+    return $ret[0]->state;
+});

@@ -23,5 +23,8 @@ class TimeManagementController extends Controller
         return $ret;
     }
 
-    
+    public function get_state(){
+        $ret=DB::select('select state from timemanagement where ID=1 ');
+        return $ret;
+    }
 }
