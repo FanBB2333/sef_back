@@ -41,7 +41,7 @@ class CourseController extends Controller
     }
     
     public function getDistinct(){
-        $query = "select distinct course.ID as ID, course.name as cname,credit, type, teacher.name as tname, day, time from course,teacher where course.teacher_ID=teacher.ID";
+        $query = "select course.ID as ID, course.name as cname,credit, type, teacher.name as tname, day, time from course,teacher where course.teacher_ID=teacher.ID";
         $classes = DB::select($query);
         return $classes;
     }
@@ -49,8 +49,9 @@ class CourseController extends Controller
     public function chooseCourse($stu_id, $cid){
         $query = "select * from course_select where Student_id='";
         $query.=$stu_id;
-        $query.="' and Course_id=";
+        $query.="' and Course_id='";
         $query.=$cid;
+        $query.="'";
         $q = DB::select($query);
 
         $course_to_test=DB::table("course")->where('ID','=',$cid)->get();
@@ -93,14 +94,15 @@ class CourseController extends Controller
     public function choosePlan($stu_id, $cid){
         $query = "select * from training_program where Student_id='";
         $query.=$stu_id;
-        $query.="' and Course_id=";
+        $query.="' and Course_id='";
         $query.=$cid;
+        $query.="'";
         $q = DB::select($query);
         if(count($q) == 0){
             $bool=DB::insert("insert into training_program(Student_id, Course_id) values(?,?)",[$stu_id,$cid]);
-            return $bool;
+            return "1";
         }
-        return $q;
+        return "0";
     }
 
     public function getPlanByID($stu_id){
